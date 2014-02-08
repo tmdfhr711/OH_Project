@@ -1,5 +1,7 @@
 package com.example.widgettutorial;
 
-public class Test {
+import android.app.Activity;
 
+public class Test extends Activity{
+	
 }
