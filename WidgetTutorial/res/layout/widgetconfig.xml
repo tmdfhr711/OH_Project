@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+		<TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="현재 저장된 연락처" />
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/button1"
+                android:text="이름 : " />
+
+            <TextView
+                android:id="@+id/mName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/button1"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/button1"
+                android:text="연락처 : " />
+
+            <TextView
+                android:id="@+id/mNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/button1"
+                android:text="" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/showcontact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="상대방 연락처 설정하기" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="위급모드 상태 체크" />
+
+    <CheckBox
+        android:id="@+id/stateCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="위급 모드" />
+
+    <Button
+        android:id="@+id/bwidgetconfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="완료" />
+
+</LinearLayout>
