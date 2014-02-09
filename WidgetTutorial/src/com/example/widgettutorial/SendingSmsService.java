@@ -39,8 +39,7 @@ public class SendingSmsService extends Service{
 	private NotificationManager nm;
 	private Notification mNoti;
 	
-	private SoundPool sp;
-	int id;
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -56,7 +55,7 @@ public class SendingSmsService extends Service{
 			sendSmsfunction();
 		}
 		else if(alarmCheck){
-			startAlarm();
+			SoundPoolSetting.startAlarm();
 		}
 		else{
 			Intent intent = new Intent(SendingSmsService.this , WidgetConfig.class);
@@ -88,11 +87,7 @@ public class SendingSmsService extends Service{
 	}
 	
 	
-	public void startAlarm(){
-		sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-		id = sp.load(c, R.raw.siren , 1);
-		sp.play(id, 1, 1, 0, 0, 1);
-	}
+	
 	public String getPhoneNumber()
 	{
 	 TelephonyManager mgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);

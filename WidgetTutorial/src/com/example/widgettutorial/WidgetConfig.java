@@ -88,7 +88,7 @@ public class WidgetConfig extends Activity implements OnClickListener{
 			stateCheck.setChecked(sharedPref.getBoolean("state", false));
 		}
 		
-		
+		SoundPoolSetting.setSoundPool(c);
 	}
 	
 	@Override
