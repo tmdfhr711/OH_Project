@@ -5,7 +5,7 @@
     android:initialLayout="@layout/widget" 
     android:minWidth="80dp" 
     android:updatePeriodMillis="1800000"
-    >
+    android:previewImage="@drawable/alarm">
     
 
 </appwidget-provider>

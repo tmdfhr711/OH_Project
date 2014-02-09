@@ -41,7 +41,8 @@ public class WidgetConfig extends Activity implements OnClickListener{
 	private boolean smsState;
 	private SharedPreferences sharedPref;
 	private NotificationManager nm;
-	private Notification mNoti;
+	private Notification smsNoti;
+	private Notification alarmNoti;
 	
 	
 	
@@ -82,10 +83,12 @@ public class WidgetConfig extends Activity implements OnClickListener{
 			mName.setText("나");
 			mNumber.setText(getPhoneNumber());
 			stateCheck.setChecked(sharedPref.getBoolean("state", false));
+			alarmCheck.setChecked(sharedPref.getBoolean("alarmState", false));
 		}else{
 			mName.setText(sharedPref.getString("name", ""));
 			mNumber.setText(sharedPref.getString("phoneNumber", ""));
 			stateCheck.setChecked(sharedPref.getBoolean("state", false));
+			alarmCheck.setChecked(sharedPref.getBoolean("alarmState", false));
 		}
 		
 		SoundPoolSetting.setSoundPool(c);
@@ -118,9 +121,12 @@ public class WidgetConfig extends Activity implements OnClickListener{
             /*mName.setText(sharedPref.getString("name", ""));
             mNumber.setText(sharedPref.getString("phoneNumber", ""));
             stateCheck.setChecked(stateCheck.isChecked());*/
-            boolean state = sharedPref.getBoolean("state", false);
-            if(state)
-            	setNotification();
+            boolean smsState = sharedPref.getBoolean("state", false);
+            boolean alarmState = sharedPref.getBoolean("alarmState", false);
+            if(smsState)
+            	smsNotification("sms");
+            else if(alarmState)
+            	smsNotification("alarm");
             finish();
 		}
 		else if(v == showContact){
@@ -160,24 +166,37 @@ public class WidgetConfig extends Activity implements OnClickListener{
 	}
 	
 
-	public void setNotification(){
+	public void smsNotification (String mode){
 		nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		PendingIntent mPendingIntent = PendingIntent.getActivity(
 				getApplicationContext(), 0, new Intent(getApplicationContext(),
 						WidgetConfig.class),
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		
+		if(mode.equals("sms")){
 		
-		mNoti = new NotificationCompat.Builder(getApplicationContext())
-		.setContentTitle("위급모드")
-		.setContentText("위급모드를 종료하려면 클릭하세요.")
-		.setSmallIcon(R.drawable.alarm)
-		.setTicker("WidgetTutorial 알림")
-		.setAutoCancel(true)
-		.setContentIntent(mPendingIntent)
-		.build();
-		
-		nm.notify(1234, mNoti);
+			smsNoti = new NotificationCompat.Builder(getApplicationContext())
+			.setContentTitle("위급 모드")
+			.setContentText("위급모드를 종료하려면 클릭하세요.")
+			.setSmallIcon(R.drawable.alarm)
+			.setTicker("WidgetTutorial 알림")
+			.setAutoCancel(true)
+			.setContentIntent(mPendingIntent)
+			.build();
+			
+			nm.notify(1234, smsNoti);
+		}else if(mode.equals("alarm")){
+			alarmNoti = new NotificationCompat.Builder(getApplicationContext())
+			.setContentTitle("경보음 모드")
+			.setContentText("모드를 바꾸려면 클릭하세요.")
+			.setSmallIcon(R.drawable.alarm)
+			.setTicker("WidgetTutorial 알림")
+			.setAutoCancel(true)
+			.setContentIntent(mPendingIntent)
+			.build();
+			
+			nm.notify(1235, alarmNoti);
+		}
 		
 	}
 	public String getPhoneNumber()
