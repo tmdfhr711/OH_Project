@@ -115,6 +115,8 @@ public class WidgetConfig extends Activity implements OnClickListener{
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("state", stateCheck.isChecked());
             editor.putBoolean("alarmState", alarmCheck.isChecked());
+            editor.putString("name", mName.getText().toString());
+            editor.putString("phoneNumber", mNumber.getText().toString());
             editor.commit();
             /*mName.setText(sharedPref.getString("name", ""));
             mNumber.setText(sharedPref.getString("phoneNumber", ""));

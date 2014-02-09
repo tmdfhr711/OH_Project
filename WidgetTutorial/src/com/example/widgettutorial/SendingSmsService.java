@@ -124,11 +124,11 @@ public class SendingSmsService extends Service{
 		
 		if(getBestProvider(mgr).equals("gps")){
 
-			mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 500, gpsListener);
+			mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 50, gpsListener);
 		}
 		else if(getBestProvider(mgr).equals("network")){
 			
-			mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 500, netListener);
+			mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 50, netListener);
 		}
 		
 	}
@@ -162,11 +162,14 @@ public class SendingSmsService extends Service{
 			updateWithNewLocation(location, "gps");
 			getLatitude = loc.getLatitude();
 			getLongitude = loc.getLongitude();
+			SharedPreferences smsSharedPref = getSharedPreferences("SendingsmsPref", MODE_PRIVATE);
+			sendSMS(smsSharedPref.getString("phoneNumber", ""), "My Location MapView" + urlString + getLatitude +","+getLongitude);
 			SharedPreferences sharedPref = getSharedPreferences("SendingsmsPref", MODE_PRIVATE);
 			SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("locationChange", true);
             editor.commit();
-			sendSMS(sharedPref.getString("phoneNumber", ""), "My Location MapView" + urlString + getLatitude +","+getLongitude);
+
+			
 		}
 
 		@Override
@@ -198,11 +201,13 @@ public class SendingSmsService extends Service{
 			updateWithNewLocation(location, "network");
 			getLatitude = loc.getLatitude();
 			getLongitude = loc.getLongitude();
+			SharedPreferences smsSharedPref = getSharedPreferences("SendingsmsPref", MODE_PRIVATE);
+			sendSMS(smsSharedPref.getString("phoneNumber", ""), "My Location MapView" + urlString + getLatitude +","+getLongitude);
 			SharedPreferences sharedPref = getSharedPreferences("SendingsmsPref", MODE_PRIVATE);
 			SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("locationChange", true);
             editor.commit();
-            sendSMS(sharedPref.getString("phoneNumber", ""), "My Location MapView" + urlString + getLatitude +","+getLongitude);
+            
 		}
 
 		@Override
