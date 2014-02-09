@@ -5,6 +5,7 @@ import java.util.Random;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ public class PointlessWidget extends AppWidgetProvider {
 			int[] appWidgetIds) {
 		// TODO Auto-generated method stub
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
+		Log.d("WidgetTutorial", "ProviderOnUpdate");
 		if (PhoneBootCompleteReceiver.wasPhoneBootSucessful) {
 	        PhoneBootCompleteReceiver.wasPhoneBootSucessful = false;
 			final int N = appWidgetIds.length;

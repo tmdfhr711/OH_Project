@@ -71,13 +71,19 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="위급모드 상태 체크" />
+        android:text="모드설정" />
 
     <CheckBox
         android:id="@+id/stateCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="위급 모드" />
+
+    <CheckBox
+        android:id="@+id/alarmCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="경보음 모드" />
 
     <Button
         android:id="@+id/bwidgetconfig"

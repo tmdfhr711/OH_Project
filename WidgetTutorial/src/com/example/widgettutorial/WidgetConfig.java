@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
@@ -28,6 +30,7 @@ public class WidgetConfig extends Activity implements OnClickListener{
 	private int awID;
 	private Button complete;
 	private Button showContact;
+	private CheckBox alarmCheck;
 	private CheckBox stateCheck;
 	private TextView mName = null;
 	private TextView mNumber = null;
@@ -35,17 +38,19 @@ public class WidgetConfig extends Activity implements OnClickListener{
 	private Button stopsendsms = null;
 	private String getName = null;
 	private String getPhoneNumber = null;
-	private boolean state;
+	private boolean smsState;
 	private SharedPreferences sharedPref;
 	private NotificationManager nm;
 	private Notification mNoti;
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.widgetconfig);
-
+		Log.d("WidgetTutorial", "ConfigOnCreate");
 		c = WidgetConfig.this;
 		//Getting info about this widget that Launched this Activity
 		Intent i = getIntent();
@@ -67,9 +72,11 @@ public class WidgetConfig extends Activity implements OnClickListener{
 	public void init(){
 		complete = (Button)findViewById(R.id.bwidgetconfig);
 		showContact = (Button)findViewById(R.id.showcontact);
+		
 		mName = (TextView) findViewById(R.id.mName);
 		mNumber = (TextView) findViewById(R.id.mNumber);
 		stateCheck = (CheckBox)findViewById(R.id.stateCheck);
+		alarmCheck = (CheckBox)findViewById(R.id.alarmCheck);
 		sharedPref = c.getSharedPreferences("SendingsmsPref", c.MODE_PRIVATE);
 		if(sharedPref.getString("phoneNumber", "").equals("")){
 			mName.setText("나");
@@ -80,6 +87,8 @@ public class WidgetConfig extends Activity implements OnClickListener{
 			mNumber.setText(sharedPref.getString("phoneNumber", ""));
 			stateCheck.setChecked(sharedPref.getBoolean("state", false));
 		}
+		
+		
 	}
 	
 	@Override
@@ -87,7 +96,7 @@ public class WidgetConfig extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		
 		if(v == complete){
-			Log.d("complete", "complete");
+			Log.d("WidgetTutorial", "complete");
 			RemoteViews remoteView = new RemoteViews(c.getPackageName() , R.layout.widget);
 			//remoteView.setTextViewText(R.id.tvConfigInput, e);
 			
@@ -104,7 +113,7 @@ public class WidgetConfig extends Activity implements OnClickListener{
 			sharedPref = c.getSharedPreferences("SendingsmsPref", c.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("state", stateCheck.isChecked());
-            
+            editor.putBoolean("alarmState", alarmCheck.isChecked());
             editor.commit();
             /*mName.setText(sharedPref.getString("name", ""));
             mNumber.setText(sharedPref.getString("phoneNumber", ""));

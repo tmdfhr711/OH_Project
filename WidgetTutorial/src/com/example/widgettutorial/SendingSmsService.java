@@ -13,6 +13,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -33,21 +35,30 @@ public class SendingSmsService extends Service{
 	private String urlString = "https://maps.google.com/?q=";
 	private String smsAddress = null;
 	private boolean stateCheck;
+	private boolean alarmCheck;
 	private NotificationManager nm;
 	private Notification mNoti;
+	
+	private SoundPool sp;
+	int id;
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		
+		Log.d("WidgetTutorial", "ServiceOnCreate");
 		init();
 		SharedPreferences sharedPref = getSharedPreferences("SendingsmsPref", MODE_PRIVATE);
 		stateCheck = sharedPref.getBoolean("state", false);
+		alarmCheck = sharedPref.getBoolean("alarmState", false);
 		Log.d("state", String.valueOf(stateCheck));
 		if(stateCheck){
 			
 			sendSmsfunction();
-		}else{
+		}
+		else if(alarmCheck){
+			startAlarm();
+		}
+		else{
 			Intent intent = new Intent(SendingSmsService.this , WidgetConfig.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(SendingSmsService.this, 0, intent, 0);
 			try {
@@ -73,10 +84,15 @@ public class SendingSmsService extends Service{
 	        editor.putString("phoneNumber", getPhoneNumber());
 	        editor.commit();
 		}
+		
 	}
 	
 	
-	
+	public void startAlarm(){
+		sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+		id = sp.load(c, R.raw.siren , 1);
+		sp.play(id, 1, 1, 0, 0, 1);
+	}
 	public String getPhoneNumber()
 	{
 	 TelephonyManager mgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
