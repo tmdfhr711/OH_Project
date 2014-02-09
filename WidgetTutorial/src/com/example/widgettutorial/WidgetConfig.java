@@ -9,8 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
@@ -123,6 +121,8 @@ public class WidgetConfig extends Activity implements OnClickListener{
             stateCheck.setChecked(stateCheck.isChecked());*/
             boolean smsState = sharedPref.getBoolean("state", false);
             boolean alarmState = sharedPref.getBoolean("alarmState", false);
+            boolean locationChange = sharedPref.getBoolean("locationChange", false);
+            
             if(smsState)
             	smsNotification("sms");
             else if(alarmState)
